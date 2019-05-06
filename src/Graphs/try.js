@@ -14,7 +14,7 @@ const UNDER_SATURATED = 'UNDER_SATURATED'
 export default class Try extends Component {
     constructor(props) {
         super(props)
-        // Don't call this.setState() here!
+        
         this.state = {
             dropdownOpen: false,
             dropdownOpen2: false,
@@ -123,8 +123,8 @@ export default class Try extends Component {
                     totalDemand: this.state.startValue * 3,
                 }
                 this.setState(prevState => ({
-                cities:cities,    
-                idCounter: prevState.idCounter + 1,      
+                cities:cities,
+                idCounter: prevState.idCounter + 1,
             }))
             }else if (!isCity && Object.keys(this.state.drain).length){
                 let plants = this.state.plants
@@ -137,7 +137,7 @@ export default class Try extends Component {
                 }
                 this.setState(prevState => ({
                     plants:plants,
-                    idCounter: prevState.idCounter + 1,                 
+                    idCounter: prevState.idCounter + 1,
                 }))
             }
        this.formatData()
@@ -158,7 +158,7 @@ export default class Try extends Component {
         }
         // this.setState(prevState=>{
         //     //plants[source.id].connections[drain.id]:0
-                
+
         //     }
         // })
     }
@@ -217,7 +217,7 @@ export default class Try extends Component {
         let plants = this.state.plants
         cities[1] ={}
         console.log(cities)
-        
+
         // recalculate base values
         const wind = this.state.wind +this.getRandomInt(40)
         const tidal = this.state.wind +this.getRandomInt(20)
@@ -225,7 +225,7 @@ export default class Try extends Component {
         let areAllPlantsEmpty = false
         let areAllCitiesSaturated = false
         for(let p in this.state.plants){
-            console.log(p)                
+            console.log(p)
 
 
 
@@ -233,7 +233,7 @@ export default class Try extends Component {
         }
         // while(!areAllPlantsEmpty || !areAllCitiesSaturated){
         //     for(let p in this.state.plants){
-                            
+
 
 
 
@@ -246,7 +246,7 @@ export default class Try extends Component {
 
 
         // }
-            
+
 
         //  areAllPlantsEmpty = false => plants.filter(p.energyLeft).length === 0
         //  areAllCitiesSaturated = false => cities.filter(!c.isSaturated).length === 0
@@ -295,7 +295,7 @@ export default class Try extends Component {
         }
         let color
         let j = 0
-        
+
         ids = Object.keys(this.state.plants)
         for (let nr in this.state.plants){
             e = this.state.plants[nr]
@@ -313,8 +313,8 @@ export default class Try extends Component {
                links.push({
                    source: ids[j],
                    target: Object.keys(e.connections[c]).toString()
-               }) 
-            }  
+               })
+            }
             nodes.push({
                 name:'Plant'+(ids[j]),
                 id:ids[j++],
@@ -322,9 +322,9 @@ export default class Try extends Component {
                 isCity:false,
                 color:color
             })
-            
-        }    
-        
+
+        }
+
         this.setState({
             data:{
                 nodes: nodes,
@@ -335,7 +335,7 @@ export default class Try extends Component {
         //     console.log(nodes)//do what you need here
         //     console.log(links)
         // }, 1);
-        
+
     }
     render() {
         const data = this.state.data
