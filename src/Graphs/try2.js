@@ -1084,7 +1084,7 @@ export default class Try extends Component {
         return (
             <div>
                 {/* <button onClick={this.removeCity}>Remove City</button> */}
-                <button onClick={this.removePLant}>Remove PLant</button>
+                {/* <button onClick={this.removePLant}>Remove PLant</button> */}
                 <button onClick={() => this.loadData(dataSet_1)}>Load Dataset 1</button>
                 <button onClick={this.run}>Ten Turns</button>
                 {/* <button onClick={() => this.handleAddNode(true)}>add a City</button>
