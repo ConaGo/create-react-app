@@ -14,9 +14,10 @@ const UNDER_SATURATED = 'UNDER_SATURATED'
 export default class Try extends Component {
     constructor(props) {
         super(props)
-        
+        this.graph = React.createRef();
         this.myRef = React.createRef();
         this.state = {
+
             dropdownOpen: false,
             dropdownOpen2: false,
             idCounter: 5,
@@ -403,6 +404,7 @@ export default class Try extends Component {
         const node = this.myRef.current
         console.log(node)   
         this.formatData()
+        
 
     }
     handleAddNode(isCity) {
@@ -560,7 +562,7 @@ export default class Try extends Component {
         while(!areAllPlantsEmpty && !areAllCitiesSaturated && breaker<150){
             breaker++
             for(let p in plants){
-                console.log('looking at '+plants[p].name + ' with production of ' + plants[p].production)
+                //console.log('looking at '+plants[p].name + ' with production of ' + plants[p].production)
                 if(plants[p].isEmpty){
                     //console.log('plant empty '+ plants[p].name)
                     continue
@@ -575,7 +577,7 @@ export default class Try extends Component {
                     city = cities.filter(e=>e.id === drainID)
                     
                     if(city[0].isSaturated ){
-                        console.log('city saturated '+ city.name)
+                        //console.log('city saturated '+ city.name)
                         continue
                     }   
                     else{
@@ -853,7 +855,7 @@ export default class Try extends Component {
                         </FormGroup>
                     </FormGroup>
                 </div>
-                <ForceGraph2D ref={el => {window.el = el}} graphData={data} nodeLabel={'F'} pauseAnimation={true}></ForceGraph2D>
+                <ForceGraph2D ref={this.graphRef} graphData={data}></ForceGraph2D>
 
             </div>
 
