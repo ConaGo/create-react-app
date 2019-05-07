@@ -15,7 +15,7 @@ const UNDER_SATURATED = 'UNDER_SATURATED'
 export default class Try extends Component {
     constructor(props) {
         super(props)
-        
+
         this.myRef = React.createRef();
         this.state = {
             saturated:false,
@@ -288,7 +288,7 @@ export default class Try extends Component {
                     id:1,
                     currentSaturation: 0,
                     totalDemand: 1500,
-                    name: 'Berlin',
+                    name: 'Potsdam',
                     isSaturated: false
                 }
                 ,
@@ -296,35 +296,35 @@ export default class Try extends Component {
                     id:2,
                     currentSaturation: 0,
                     totalDemand: 2500,
-                    name: 'Tokyo',
+                    name: 'Berlin',
                     isSaturated: false
                 },
                 {
                     id:13,
                     currentSaturation: 0,
                     totalDemand: 800,
-                    name: 'Berlin',
+                    name: 'Cottbus',
                     isSaturated: false
                 },
                 {
                     id:14,
                     currentSaturation: 0,
                     totalDemand: 1000,
-                    name: 'Berlin',
+                    name: 'Brandenburg An Der Havel',
                     isSaturated: false
                 },
                 {
                     id:15,
                     currentSaturation: 0,
                     totalDemand: 250    ,
-                    name: 'Berlin',
+                    name: 'Oranienburg',
                     isSaturated: false
                 },
                 {
                     id:16,
                     currentSaturation: 0,
                     totalDemand: 1000,
-                    name: 'Berlin',
+                    name: 'Frankfurt Oder',
                     isSaturated: false
                 }
             ],
@@ -661,7 +661,7 @@ export default class Try extends Component {
     }
     componentWillMount(){
         const node = this.myRef.current
-        console.log(node)   
+        console.log(node)
         this.formatData()
         console.group(data1)
 
@@ -690,21 +690,21 @@ export default class Try extends Component {
                 this.setState(prevState => ({
                 cities:[
                     ...prevState.cities,
-                    {   
+                    {
                         id:id,
                         currentSaturation: 0,
                         name: 'City' + id,
                         totalDemand: this.state.startValue * 3,
                         isSaturated: false
                     }
-                ],    
-                idCounter: prevState.idCounter + 1,      
+                ],
+                idCounter: prevState.idCounter + 1,
             }))
             }else if (!isCity && Object.keys(this.state.drain).length){
                 this.setState(prevState => ({
                     plants:[
                         ...prevState.plants,
-                        {   
+                        {
                             id:id,
                             production: 0,
                             multiplier: 1,
@@ -715,7 +715,7 @@ export default class Try extends Component {
                             isEmpty: false
                         }
                     ],
-                    idCounter: prevState.idCounter + 1,                 
+                    idCounter: prevState.idCounter + 1,
                 }))
             }
        this.formatData()
@@ -734,7 +734,7 @@ export default class Try extends Component {
             plants.push(plant)
             console.log(plant+"solo")
             // console.log(plants)
-            
+
                 console.log(plants)
                 this.setState({
                     plants:plants
@@ -744,7 +744,7 @@ export default class Try extends Component {
         this.formatData()
         // this.setState(prevState=>{
         //     //plants[source.id].connections[drain.id]:0
-                
+
         //     }
         // })
     }
@@ -789,9 +789,9 @@ export default class Try extends Component {
     }
     run(){
         for (let i = 1; i <= 50; ++i) {
-            
+
               this.handleTurn()}
-            
+
     }
     loadData(data){
         console.log(data)
@@ -845,7 +845,7 @@ export default class Try extends Component {
         for(let p in this.state.plants){
             let plant = plants[p]
             switch(plant.type){
-                case WIND: 
+                case WIND:
                     plant.production = Math.floor(plant.multiplier*wind)
                     break
                 case TIDAL:
@@ -864,42 +864,42 @@ export default class Try extends Component {
                     //console.log('plant empty '+ plants[p].name)
                     continue
                 }
-                    
+
                 for(let c in plants[p].connections){
                     let drainID = plants[p].connections[c]
                     let city
                     let citiesTemp
-                    
+
                     citiesTemp = cities.filter(e=>e.id !== drainID)
                     city = cities.filter(e=>e.id === drainID)
-                    
+
                     if(city[0].isSaturated ){
                         //console.log('city saturated '+ city.name)
                         continue
-                    }   
+                    }
                     else{
-                        
+
                         if(plants[p].production <=0){
                             //console.log('plant empty '+ plants[p].name)
                             plants[p].isEmpty = true
-                            
+
                         }else{
                             city[0].currentSaturation +=1
-                            plants[p].production -= 1    
+                            plants[p].production -= 1
                         }
-                            
+
                         if(city[0].currentSaturation >= city[0].totalDemand){
                             //console.log('city full '+ city.name)
                             city[0].isSaturated = true
                         }
-                        
+
                     }
                     citiesTemp = citiesTemp.concat(city)
                     cities = [...citiesTemp]
                 }
             }
             areAllPlantsEmpty = true
-            for(let p in plants)              
+            for(let p in plants)
                 if(!plants[p].isEmpty)
                     areAllPlantsEmpty = false
             areAllCitiesSaturated = true
@@ -915,23 +915,23 @@ export default class Try extends Component {
             console.log(cities[c].name + " Saturated with " + cities[c].currentSaturation + " from " + cities[c].totalDemand)
         }
         for(let p in plants){
-            let saturated = true 
+            let saturated = true
             console.log('calculating ' + plants[p].name + ' Subnet...')
             for(let c in plants[p].connections){
                 let drainID = plants[p].connections[c]
-                
+
                 let city = cities.filter(e=>e.id === drainID)
 
                 if(!city[0].isSaturated){
-                   saturated = false 
+                   saturated = false
                 }
             }
-            
+
             plants[p].previousDecisions.pop()
-            
-            
+
+
             if(saturated){
-                
+
                 plants[p].previousDecisions.unshift(OVER_SATURATED)
                 console.log(OVER_SATURATED)
             }else{
@@ -940,34 +940,34 @@ export default class Try extends Component {
             }
 
             let decisionCounter = 0
-            
+
             for(let e in plants[p].previousDecisions){
-                
+
                 switch(plants[p].previousDecisions[e]){
                     case SATURATED:
                         decisionCounter += 2
-                       
+
                         break
                     case OVER_SATURATED:
-                        
+
                         decisionCounter = decisionCounter++
                         break
                     default:
                         decisionCounter -= 2
                 }
-                
-                
+
+
             }
-            
+
             if(decisionCounter >= 9){
                     //DECREASE
                     console.log('Decreasing Capacity')
                     plants[p].multiplier -= 0.1
-                }    
+                }
                 else if(decisionCounter>=0){
                     //DO NOTHING
                     plants[p].previousDecisions.shift()
-                    plants[p].previousDecisions.unshift(SATURATED)   
+                    plants[p].previousDecisions.unshift(SATURATED)
                 }else{
                     console.log('Increasing Capacity')
                     plants[p].multiplier += 0.1
@@ -982,9 +982,9 @@ export default class Try extends Component {
                 cities: cities,
                 plants: plants
             })
-            
-        }    
-            
+
+        }
+
 
         //  areAllPlantsEmpty = false => plants.filter(p.energyLeft).length === 0
         //  areAllCitiesSaturated = false => cities.filter(!c.isSaturated).length === 0
@@ -1065,7 +1065,7 @@ export default class Try extends Component {
         //     console.log(nodes)//do what you need here
         //     console.log(links)
         // }, 1);
-        
+
     }
 
     render() {
