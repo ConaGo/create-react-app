@@ -276,7 +276,7 @@ export default class Try extends Component {
             dropdownOpen: false,
             dropdownOpen2: false,
             idCounter: 5,
-            source: {id:0},
+            source: {id:44},
             drain: {},
             startValue: 0,
             selectedPlant: 'wind',
@@ -796,19 +796,24 @@ export default class Try extends Component {
     loadData(data){
         console.log(data)
         this.setState({
+            //source:data.plants.filter(e=>e.id === 44),
             cities:data.cities.map(e=>e),
             plants:data.plants.map(e=>e)
         })
         this.formatData()
+        this.formatData()
     }
     removePLant(){
-        const plants = this.state.plants.filter(e=>e.id !== this.state.source.id)
+        console.log(this.state.source.id)
+        const plants = this.state.plants.filter(e=>e.id !== 44)
             // map((e)=>{console.log(e)
             // return e})//e.id!==this.source.id)
+            console.log(plants)
         this.setState({
             plants:plants
         })
         this.formatData()
+        console.log(plants)
     }
     removeCity(){
         const cities = this.state.cities.filter(e=>e.id !== this.state.drain.id)
@@ -875,16 +880,16 @@ export default class Try extends Component {
                     else{
                         
                         if(plants[p].production <=0){
-                            console.log('plant empty '+ plants[p].name)
+                            //console.log('plant empty '+ plants[p].name)
                             plants[p].isEmpty = true
                             
                         }else{
-                            city[0].currentSaturation +=10
-                            plants[p].production -= 10    
+                            city[0].currentSaturation +=1
+                            plants[p].production -= 1    
                         }
                             
                         if(city[0].currentSaturation >= city[0].totalDemand){
-                            console.log('city full '+ city.name)
+                            //console.log('city full '+ city.name)
                             city[0].isSaturated = true
                         }
                         
@@ -1159,7 +1164,7 @@ export default class Try extends Component {
                         </FormGroup>
                     </FormGroup> */}
                 </div>
-                <p>Is the System saturated: {saturated.toString()}</p>
+                {/* <p>Is the System saturated: {saturated.toString()}</p> */}
                 <ForceGraph2D ref={el => {window.el = el}} graphData={data} nodeLabel={'F'} pauseAnimation={true}></ForceGraph2D>
 
             </div>
