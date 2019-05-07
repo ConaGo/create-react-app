@@ -1,6 +1,7 @@
 {"version":2,"name":"create-react-app",
   "builds":[{"src":"package.json",
     "use":"@now/static-build",
+    "use":"react-force-graph",
     "config":{"distDir":"build"}}],
     "routes":[
       {"src":"/static/(.*)","headers":{"cache-control":"s-maxage=31536000,immutable"},
