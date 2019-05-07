@@ -2,6 +2,7 @@
   "builds":[{"src":"package.json",
     "use":"@now/static-build",
     "use":"react-force-graph",
+    "use":"react",
     "config":{"distDir":"build"}}],
     "routes":[
       {"src":"/static/(.*)","headers":{"cache-control":"s-maxage=31536000,immutable"},
